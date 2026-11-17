@@ -26,7 +26,7 @@
 - [7. Consultas](#7-consultas)
   - [7.1. Procesamiento Distribuido MapReduce con RDDs (`02_MapReduce_RDD.scala`)](#1-procesamiento-distribuido-mapreduce-con-rdds-02_mapreduce_rddscala)
   - [7.2. Inventario Completo de las 20 Consultas en Spark SQL (`03_SparkSQL_Consultas.scala`)](#inventario-completo-de-las-20-consultas-en-spark-sql-con-resultados-03_sparksql_consultasscala)
-- [8. Resultados y Hallazgos Clave](#8-resultados-y-hallazgos-clave)
+- [8. Resultados, Hallazgos Clave y Evidencia extra](#8-resultados-hallazgos-clave-y-evidencia-extra)
 - [9. Recomendaciones (Calidad de Datos y Limpieza ETL)](#9recomendaciones-calidad-de-datos-y-limpieza-etl)
 - [10. Conclusiones y Fuente Oficial](#10-conclusiones-y-fuente-oficial)
 - [11. Créditos y Equipo](#11-créditos-y-equipo)
@@ -353,7 +353,7 @@ Este módulo opera directamente sobre **RDDs puros** (`org.apache.spark.rdd.RDD`
 <img width="389" height="553" alt="image" src="https://github.com/user-attachments/assets/437becf8-025e-4810-b44a-27e07989330a" />
 
 
-##  8. Resultados y Hallazgos Clave
+##  8. Resultados, Hallazgos Clave y Evidencia extra
 
 ### 🔹 Estadísticos Descriptivos (MapReduce RDD – Punto 3b)
 Calculados de forma distribuida sobre los **N = 11,865** registros con denuncias positivas (`valor > 0`):
@@ -379,6 +379,16 @@ El libro generado automáticamente por Spark contiene **6 hojas** correspondient
 * **`5f_1_OrderBy_MacroSur`:** Evolución 2019–2025 en la Macrorregión Sur (`BETWEEN` + `IN`).
 * **`5f_2_OrderBy_Captacion`:** Modalidades de captación digital mediante redes sociales, internet y ofertas (`LIKE` + `HAVING`).
 * **`5f_3_OrderBy_PicosLima`:** Meses pico (`> 100` denuncias) en Lima Metropolitana, destacando **agosto de 2022 (`981` denuncias)**, **abril de 2017 (`754`)** y **diciembre de 2021 (`650`)**.
+
+### 🔹Evidencia extra
+
+<img width="1320" height="610" alt="image" src="https://github.com/user-attachments/assets/9bab528e-1e38-4e35-9207-424e04959933" />
+
+
+<img width="1097" height="516" alt="image" src="https://github.com/user-attachments/assets/24d9443e-0400-4b4f-9f11-11a2be6f63fd" />
+
+
+<img width="1058" height="435" alt="image" src="https://github.com/user-attachments/assets/da722681-756f-4e84-9dc9-0203f064d489" />
 
 
 
