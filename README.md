@@ -16,13 +16,20 @@
 
 ## Tabla de Contenidos
 
-- [1. Descripción General](#-1-descripción-general)
-- [2. Arquitectura del Pipeline](#-2-arquitectura-del-pipeline)
-- [3. Estructura del Proyecto](#-3-estructura-del-proyecto)
-- [4. Modelo de Datos (Esquema Estrella)](#-4-modelo-de-datos-esquema-estrella)
-- [5. Requisitos e Instalación](#-5-requisitos-e-instalación)
-- [6. Guía de Ejecución Paso a Paso](#-6-guía-de-ejecución-paso-a-paso)
-- [7. Resultados y Hallazgos Clave](#-7-resultados-y-hallazgos-clave)
+
+- [1. Descripción General](#1-descripción-general)
+- [2. Arquitectura del Pipeline](#2-arquitectura-del-pipeline)
+- [3. Estructura del Proyecto](#3-estructura-del-proyecto)
+- [4. Modelo de Datos (Esquema Estrella)](#4-modelo-de-datos-esquema-estrella)
+- [5. Requisitos e Instalación](#5-requisitos-e-instalación)
+- [6. Guía de Ejecución Paso a Paso](#6-guía-de-ejecución-paso-a-paso)
+- [7. Consultas](#7-consultas)
+  - [7.1. Procesamiento Distribuido MapReduce con RDDs (`02_MapReduce_RDD.scala`)](#1-procesamiento-distribuido-mapreduce-con-rdds-02_mapreduce_rddscala)
+  - [7.2. Inventario Completo de las 20 Consultas en Spark SQL (`03_SparkSQL_Consultas.scala`)](#inventario-completo-de-las-20-consultas-en-spark-sql-con-resultados-03_sparksql_consultasscala)
+- [8. Resultados y Hallazgos Clave](#8-resultados-y-hallazgos-clave)
+- [9. Recomendaciones (Calidad de Datos y Limpieza ETL)](#9recomendaciones-calidad-de-datos-y-limpieza-etl)
+- [10. Conclusiones y Fuente Oficial](#10-conclusiones-y-fuente-oficial)
+- [11. Créditos y Equipo](#11-créditos-y-equipo)
 
 ---
 
@@ -372,3 +379,28 @@ El libro generado automáticamente por Spark contiene **6 hojas** correspondient
 * **`5f_1_OrderBy_MacroSur`:** Evolución 2019–2025 en la Macrorregión Sur (`BETWEEN` + `IN`).
 * **`5f_2_OrderBy_Captacion`:** Modalidades de captación digital mediante redes sociales, internet y ofertas (`LIKE` + `HAVING`).
 * **`5f_3_OrderBy_PicosLima`:** Meses pico (`> 100` denuncias) en Lima Metropolitana, destacando **agosto de 2022 (`981` denuncias)**, **abril de 2017 (`754`)** y **diciembre de 2021 (`650`)**.
+
+
+
+## 9.Recomendaciones (Calidad de Datos y Limpieza (ETL))
+
+Antes de poblar el almacén de datos, `01_ETL_Postgres.scala` aplica las siguientes reglas de saneamiento:
+* **Depuración de subtotales embebidos:** De los `77,486` registros originales, se filtraron `10,812` filas agregadas (`_TOTAL` y `_SUB TOTAL`) para evitar doble conteo estadístico, conservando **`66,674` registros atómicos**.
+* **Codificación y renombramiento posicional:** Lectura explícita en `ISO-8859-1` y mapeo posicional `.toDF()` para evitar pérdida o corrupción de tildes y caracteres especiales (`Ñ`) en entornos Windows.
+* **Homologación geográfica:** Unificación de variantes nominales (`CUZCO` → `CUSCO`) y uso del tipo de dato `TEXT` en las dimensiones para soportar dependencias policiales con múltiples distritos concatenados.
+
+## 10. Conclusiones y Fuente Oficial
+
+* **Fuente de Datos:** Policía Nacional del Perú (PNP) – Dataset *"Denuncias por el delito de trata de personas (2017–2025)"*, Plataforma Nacional de Datos Abiertos del Estado Peruano.
+* **Hallazgo Criminológico:** El fenómeno presenta una fuerte centralización territorial en **Lima (`52.07%`)**, con predominio de la **explotación sexual (`54.81%`)** y captación basada principalmente en **falsas ofertas de trabajo** y **engaño** sobre víctimas jóvenes con educación secundaria.
+* **Hallazgo Técnico:** La combinación de **RDDs** (para cálculos estadísticos de bajo nivel) con **PostgreSQL + Spark SQL** (modelo estrella optimizado por Catalyst) garantiza trazabilidad completa, integridad referencial y tiempos de respuesta de segundos sobre decenas de miles de registros multidimensionales.
+
+## 11. Créditos y Equipo
+
+* **Curso:** Análisis en Macrodatos (CC531) – Laboratorio 03
+* **Institución:** Universidad Nacional de Ingeniería (UNI) / Facultad de Ciencias
+* **Docente:** EDUARDO YAURI LOZANO
+* **Integrantes:**
+  * **Flores Villar, Esau** 
+  * **Montalvo Espinzoa, José Manuel** 
+---
